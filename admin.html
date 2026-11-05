@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https://i.ytimg.com; connect-src https://api.github.com; base-uri 'none'; form-action 'none'">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Administration | J&amp;L Consulting</title>
+<link rel="icon" type="image/png" href="assets/favicon-64.png">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .admin-top { background: #fff; border-bottom: 1px solid var(--line); padding-block: .75rem; }
+  .admin-top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .admin-main { max-width: 46rem; padding-block: 1.5rem 4rem; }
+  .admin-main h1 { font-size: 1.75rem; margin-bottom: .5rem; }
+  .admin-main h2 { font-size: 1.35rem; margin-bottom: 1rem; }
+  .admin-main section + section { margin-top: 2.5rem; }
+  .admin-form { margin-top: 1rem; }
+  .admin-form .btn[type="submit"] { width: 100%; }
+  .link-btn { min-height: 2.75rem; padding: 0; background: none; border: 0; color: var(--red); font: 600 .9375rem var(--sans); text-decoration: underline; cursor: pointer; }
+  .msg { position: sticky; top: .5rem; z-index: 5; margin-bottom: 1rem; padding: .75rem 1rem; background: var(--pale); border-left: 4px solid var(--blue); border-radius: 0 6px 6px 0; box-shadow: 0 2px 8px rgba(16, 39, 86, .2); }
+  .msg.err { border-left-color: var(--red); }
+  .items { margin-top: 1rem; }
+  .item { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding-block: .875rem; border-bottom: 1px solid var(--line); }
+  .item > div { min-width: 0; }
+  .item strong { display: block; }
+  .item p { font-size: .9375rem; color: var(--muted); }
+  .item img { display: block; width: 8rem; aspect-ratio: 16 / 9; object-fit: cover; margin-bottom: .375rem; border-radius: 4px; }
+  .empty { margin-top: .75rem; color: var(--muted); }
+  .hint { margin-top: .375rem; font-size: .875rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<header class="admin-top">
+  <div class="wrap">
+    <span class="brand">
+      <img src="assets/logo-96.webp" width="40" height="40" alt="">
+      <span class="brand-name">J&amp;L <span>Admin</span></span>
+    </span>
+    <button class="btn btn-small btn-line" id="lock" type="button" hidden>Verrouiller</button>
+  </div>
+</header>
+
+<main class="wrap admin-main">
+  <p class="msg" id="msg" role="status" hidden></p>
+
+  <div id="v-login" hidden>
+    <h1>Connexion</h1>
+    <form class="card form admin-form" id="f-login">
+      <div class="field">
+        <label for="l-pass">Mot de passe</label>
+        <input id="l-pass" type="password" required autocomplete="current-password">
+      </div>
+      <button class="btn btn-blue" type="submit">Se connecter</button>
+    </form>
+    <button class="link-btn" id="forget" type="button">Mot de passe oublié : reconfigurer cet appareil</button>
+  </div>
+
+  <div id="v-setup" hidden>
+    <h1>Configurer cet appareil</h1>
+    <p>Le jeton GitHub est chiffré avec votre mot de passe et reste sur cet appareil. À faire une seule fois par appareil.</p>
+    <form class="card form admin-form" id="f-setup">
+      <div class="field">
+        <label for="s-repo">Dépôt GitHub</label>
+        <input id="s-repo" required placeholder="compte/nom-du-depot" autocomplete="off" autocapitalize="off" spellcheck="false">
+      </div>
+      <div class="field">
+        <label for="s-token">Jeton GitHub (accès Contents : lecture et écriture)</label>
+        <input id="s-token" type="password" required autocomplete="off" spellcheck="false">
+        <p class="hint">La création du jeton est expliquée dans le README.</p>
+      </div>
+      <div class="field">
+        <label for="s-pass">Mot de passe (10 caractères minimum)</label>
+        <input id="s-pass" type="password" required minlength="10" autocomplete="new-password">
+      </div>
+      <div class="field">
+        <label for="s-pass2">Confirmer le mot de passe</label>
+        <input id="s-pass2" type="password" required minlength="10" autocomplete="new-password">
+      </div>
+      <button class="btn btn-blue" type="submit">Enregistrer</button>
+    </form>
+  </div>
+
+  <div id="v-app" hidden>
+    <section>
+      <h2>Ajouter un témoignage</h2>
+      <p class="hint">Publiez un témoignage seulement avec l'accord de la personne.</p>
+      <form class="card form admin-form" id="f-testimonial">
+        <div class="field">
+          <label for="t-name">Nom</label>
+          <input id="t-name" required maxlength="60">
+        </div>
+        <div class="field">
+          <label for="t-country">Pays</label>
+          <input id="t-country" required maxlength="40" list="pays-liste">
+          <datalist id="pays-liste">
+            <option value="France"><option value="Italie"><option value="Espagne"><option value="Canada"><option value="Brésil"><option value="Albanie"><option value="Chine">
+          </datalist>
+        </div>
+        <div class="field">
+          <label for="t-text">Avis</label>
+          <textarea id="t-text" required maxlength="600"></textarea>
+        </div>
+        <button class="btn btn-blue" type="submit">Publier le témoignage</button>
+      </form>
+      <div class="items" id="list-testimonials"></div>
+    </section>
+
+    <section>
+      <h2>Ajouter une vidéo YouTube</h2>
+      <form class="card form admin-form" id="f-video">
+        <div class="field">
+          <label for="v-url">Lien YouTube</label>
+          <input id="v-url" required inputmode="url" placeholder="https://www.youtube.com/watch?v=…" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="v-title">Titre (facultatif)</label>
+          <input id="v-title" maxlength="100">
+        </div>
+        <button class="btn btn-blue" type="submit">Publier la vidéo</button>
+      </form>
+      <div class="items" id="list-videos"></div>
+    </section>
+  </div>
+
+</main>
+
+<script>
+(() => {
+  'use strict';
+
+  const STORE = 'jl-admin-v1';
+  const FILE = 'data/content.json';
+  const ITERATIONS = 310000;
+  const IDLE_MS = 15 * 60 * 1000;
+
+  const $ = (id) => document.getElementById(id);
+  const encoder = new TextEncoder();
+  const decoder = new TextDecoder();
+  let session = null; // { token, repo, branch } : en mémoire uniquement
+  let current = { testimonials: [], videos: [] };
+  let idleTimer = null;
+
+  /* Affichage */
+  function show(view) {
+    ['v-login', 'v-setup', 'v-app'].forEach((v) => { $(v).hidden = v !== view; });
+    $('lock').hidden = view !== 'v-app';
+  }
+
+  function message(text, isError) {
+    const box = $('msg');
+    box.textContent = text;
+    box.hidden = !text;
+    box.className = isError ? 'msg err' : 'msg';
+  }
+
+  /* Encodage */
+  function bytesToB64(bytes) {
+    let bin = '';
+    bytes.forEach((b) => { bin += String.fromCharCode(b); });
+    return btoa(bin);
+  }
+  const b64ToBytes = (b64) => Uint8Array.from(atob(b64.replace(/\s/g, '')), (c) => c.charCodeAt(0));
+
+  /* Stockage local du jeton chiffré */
+  function readStore() {
+    try { return JSON.parse(localStorage.getItem(STORE)); } catch (e) { return null; }
+  }
+
+  async function deriveKey(password, salt) {
+    const base = await crypto.subtle.importKey('raw', encoder.encode(password), 'PBKDF2', false, ['deriveKey']);
+    return crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt, iterations: ITERATIONS, hash: 'SHA-256' },
+      base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']
+    );
+  }
+
+  async function saveSecret(password, repo, branch, token) {
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const key = await deriveKey(password, salt);
+    const data = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, encoder.encode(token)));
+    localStorage.setItem(STORE, JSON.stringify({
+      repo, branch, salt: bytesToB64(salt), iv: bytesToB64(iv), data: bytesToB64(data)
+    }));
+  }
+
+  async function openSecret(password, stored) {
+    const key = await deriveKey(password, b64ToBytes(stored.salt));
+    const plain = await crypto.subtle.decrypt(
+      { name: 'AES-GCM', iv: b64ToBytes(stored.iv) }, key, b64ToBytes(stored.data)
+    );
+    return decoder.decode(plain);
+  }
+
+  /* API GitHub */
+  async function github(token, url, options) {
+    const res = await fetch('https://api.github.com/' + url, Object.assign({ cache: 'no-store' }, options, {
+      headers: {
+        Accept: 'application/vnd.github+json',
+        Authorization: 'Bearer ' + token,
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    }));
+    return res;
+  }
+
+  function apiError(status) {
+    if (status === 401) return 'Jeton GitHub refusé ou expiré. Reconfigurez cet appareil avec un nouveau jeton.';
+    if (status === 403) return 'Le jeton n\'a pas le droit d\'écrire dans ce dépôt (permission Contents).';
+    if (status === 404) return 'Dépôt introuvable, ou jeton sans accès à ce dépôt.';
+    if (status === 409) return 'Le fichier vient de changer sur GitHub. Réessayez.';
+    return 'GitHub a répondu avec une erreur ' + status + '. Réessayez.';
+  }
+
+  async function loadContent() {
+    const res = await github(session.token, 'repos/' + session.repo + '/contents/' + FILE + '?ref=' + encodeURIComponent(session.branch));
+    if (res.status === 404) return { data: { testimonials: [], videos: [] }, sha: null };
+    if (!res.ok) throw new Error(apiError(res.status));
+    const file = await res.json();
+    const data = JSON.parse(decoder.decode(b64ToBytes(file.content)));
+    return {
+      data: {
+        testimonials: Array.isArray(data.testimonials) ? data.testimonials : [],
+        videos: Array.isArray(data.videos) ? data.videos : []
+      },
+      sha: file.sha
+    };
+  }
+
+  /* Relit toujours la dernière version avant d'écrire, pour ne rien écraser. */
+  async function publish(change, commitMessage) {
+    message('Publication en cours…');
+    try {
+      const latest = await loadContent();
+      change(latest.data);
+      const body = {
+        message: commitMessage,
+        branch: session.branch,
+        content: bytesToB64(encoder.encode(JSON.stringify(latest.data, null, 2) + '\n'))
+      };
+      if (latest.sha) body.sha = latest.sha;
+      const res = await github(session.token, 'repos/' + session.repo + '/contents/' + FILE, {
+        method: 'PUT',
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) throw new Error(apiError(res.status));
+      current = latest.data;
+      render();
+      message('Publié. Le site sera à jour dans quelques minutes.');
+      return true;
+    } catch (err) {
+      message(err instanceof TypeError ? 'Connexion à GitHub impossible. Vérifiez votre réseau.' : err.message, true);
+      return false;
+    }
+  }
+
+  /* Listes */
+  function make(tag, text) {
+    const node = document.createElement(tag);
+    if (text) node.textContent = text;
+    return node;
+  }
+
+  function row(content, label, onDelete) {
+    const item = make('div');
+    item.className = 'item';
+    const del = make('button', 'Supprimer');
+    del.type = 'button';
+    del.className = 'link-btn';
+    del.setAttribute('aria-label', 'Supprimer ' + label);
+    del.addEventListener('click', () => {
+      if (window.confirm('Supprimer ' + label + ' du site ?')) onDelete();
+    });
+    item.append(content, del);
+    return item;
+  }
+
+  function render() {
+    const tList = $('list-testimonials');
+    tList.replaceChildren();
+    current.testimonials.forEach((t) => {
+      const box = make('div');
+      box.append(make('strong', t.name + ' · ' + t.country), make('p', t.text));
+      tList.appendChild(row(box, 'le témoignage de ' + t.name, () => publish((d) => {
+        d.testimonials = d.testimonials.filter((x) => x.id !== t.id);
+      }, 'Admin : suppression du témoignage de ' + t.name)));
+    });
+    if (!current.testimonials.length) {
+      const none = make('p', 'Aucun témoignage publié.');
+      none.className = 'empty';
+      tList.appendChild(none);
+    }
+
+    const vList = $('list-videos');
+    vList.replaceChildren();
+    current.videos.forEach((v) => {
+      const box = make('div');
+      const img = make('img');
+      img.src = 'https://i.ytimg.com/vi/' + encodeURIComponent(v.id) + '/mqdefault.jpg';
+      img.alt = '';
+      box.append(img, make('strong', v.title || 'Sans titre'));
+      vList.appendChild(row(box, 'la vidéo ' + (v.title || v.id), () => publish((d) => {
+        d.videos = d.videos.filter((x) => x.id !== v.id);
+      }, 'Admin : suppression de la vidéo ' + v.id)));
+    });
+    if (!current.videos.length) {
+      const none = make('p', 'Aucune vidéo publiée.');
+      none.className = 'empty';
+      vList.appendChild(none);
+    }
+  }
+
+  function youtubeId(input) {
+    const value = input.trim();
+    if (/^[\w-]{11}$/.test(value)) return value;
+    try {
+      const url = new URL(value);
+      const host = url.hostname.replace(/^(www|m|music)\./, '');
+      let id = null;
+      if (host === 'youtu.be') id = url.pathname.split('/')[1];
+      else if (host === 'youtube.com' || host === 'youtube-nocookie.com') {
+        id = url.searchParams.get('v') || (url.pathname.match(/^\/(?:embed|shorts|live)\/([\w-]{11})/) || [])[1];
+      }
+      return /^[\w-]{11}$/.test(id || '') ? id : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /* Session */
+  function resetIdle() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(lock, IDLE_MS);
+  }
+
+  function lock() {
+    clearTimeout(idleTimer);
+    session = null;
+    current = { testimonials: [], videos: [] };
+    $('list-testimonials').replaceChildren();
+    $('list-videos').replaceChildren();
+    message('');
+    show('v-login');
+  }
+
+  async function enter(token, stored) {
+    session = { token, repo: stored.repo, branch: stored.branch };
+    show('v-app');
+    resetIdle();
+    message('Chargement…');
+    try {
+      current = (await loadContent()).data;
+      render();
+      message('');
+    } catch (err) {
+      message(err instanceof TypeError ? 'Connexion à GitHub impossible. Vérifiez votre réseau.' : err.message, true);
+    }
+  }
+
+  ['pointerdown', 'keydown'].forEach((type) => {
+    document.addEventListener(type, () => { if (session) resetIdle(); });
+  });
+
+  $('lock').addEventListener('click', lock);
+
+  $('forget').addEventListener('click', () => {
+    if (!window.confirm('Effacer le jeton de cet appareil ? Il faudra saisir de nouveau un jeton GitHub valide.')) return;
+    localStorage.removeItem(STORE);
+    message('');
+    show('v-setup');
+  });
+
+  $('f-login').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const stored = readStore();
+    message('Vérification…');
+    let token;
+    try {
+      token = await openSecret($('l-pass').value, stored);
+    } catch (err) {
+      message('Mot de passe incorrect.', true);
+      return;
+    }
+    $('l-pass').value = '';
+    enter(token, stored);
+  });
+
+  $('f-setup').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const repo = $('s-repo').value.trim().replace(/^https:\/\/github\.com\//, '').replace(/\/$/, '');
+    const token = $('s-token').value.trim();
+    if ($('s-pass').value !== $('s-pass2').value) {
+      message('Les deux mots de passe ne correspondent pas.', true);
+      return;
+    }
+    if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) {
+      message('Indiquez le dépôt au format compte/nom-du-depot.', true);
+      return;
+    }
+    message('Vérification du jeton…');
+    try {
+      const res = await github(token, 'repos/' + repo);
+      if (!res.ok) throw new Error(apiError(res.status));
+      const info = await res.json();
+      await saveSecret($('s-pass').value, repo, info.default_branch, token);
+      e.target.reset();
+      enter(token, readStore());
+    } catch (err) {
+      message(err instanceof TypeError ? 'Connexion à GitHub impossible. Vérifiez votre réseau.' : err.message, true);
+    }
+  });
+
+  $('f-testimonial').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const entry = {
+      id: Date.now().toString(36),
+      name: $('t-name').value.trim(),
+      country: $('t-country').value.trim(),
+      text: $('t-text').value.trim()
+    };
+    if (!entry.name || !entry.country || !entry.text) {
+      message('Renseignez le nom, le pays et l\'avis.', true);
+      return;
+    }
+    const ok = await publish((d) => { d.testimonials.unshift(entry); }, 'Admin : témoignage de ' + entry.name);
+    if (ok) e.target.reset();
+  });
+
+  $('f-video').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = youtubeId($('v-url').value);
+    if (!id) {
+      message('Ce lien YouTube n\'est pas reconnu.', true);
+      return;
+    }
+    const title = $('v-title').value.trim();
+    const ok = await publish((d) => {
+      d.videos = d.videos.filter((x) => x.id !== id);
+      d.videos.unshift({ id, title });
+    }, 'Admin : vidéo ' + id);
+    if (ok) e.target.reset();
+  });
+
+  /* Démarrage */
+  if (!window.crypto || !crypto.subtle) {
+    message('Ouvrez cette page en HTTPS : le chiffrement n\'est pas disponible ici.', true);
+    return;
+  }
+  show(readStore() ? 'v-login' : 'v-setup');
+})();
+</script>
+</body>
+</html>

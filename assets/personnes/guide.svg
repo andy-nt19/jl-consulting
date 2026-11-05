@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 170" role="img" aria-label="Une conseillère qui montre les destinations">
+<style>
+.eyes{transform-box:fill-box;transform-origin:center;animation:blink 4.6s infinite}
+.point{transform-origin:118px 104px;animation:point 2.2s ease-in-out infinite}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+@keyframes point{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(7deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M34 170q0-72 42-72h8q42 0 42 72z" fill="#f6cd39"/>
+  <path d="M42 112L30 170" stroke="#f6cd39" stroke-width="16"/>
+  <g class="point">
+    <path d="M118 108l30-30" stroke="#f6cd39" stroke-width="16"/>
+    <circle cx="152" cy="72" r="9" fill="#8a5a3c"/>
+    <path d="M155 68l9-9" stroke="#8a5a3c" stroke-width="6"/>
+  </g>
+  <rect x="71" y="78" width="18" height="26" rx="7" fill="#744a30"/>
+  <path d="M71 98q9 10 18 0" stroke="#fff" stroke-width="4"/>
+  <ellipse cx="80" cy="58" rx="24" ry="27" fill="#8a5a3c"/>
+  <path d="M54 54q-4-38 26-38t26 38q-12-12-26-12T54 54z" fill="#4aa9e4"/>
+  <path d="M98 22q16-16 22-1q-2 13-19 11z" fill="#fff"/>
+  <path d="M57 42q23-14 46 0" stroke="#fff" stroke-width="3.500"/>
+  <g class="eyes" fill="#1b1411"><circle cx="72" cy="58" r="3"/><circle cx="90" cy="58" r="3"/></g>
+  <path d="M71 71q9 7 18 0" stroke="#1b1411" stroke-width="2.500"/>
+</g>
+</svg>

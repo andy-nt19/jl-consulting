@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" role="img" aria-label="Une personne confirme un transfert sur son téléphone">
+<style>
+.eyes{transform-box:fill-box;transform-origin:center;animation:blink 5s infinite}
+.ok{transform-box:fill-box;transform-origin:center;animation:ok 3s ease-in-out infinite}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+@keyframes ok{0%,100%{transform:scale(.88)}50%{transform:scale(1.08)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M22 180q0-76 46-76t46 76z" fill="#173ad3"/>
+  <rect x="60" y="82" width="16" height="26" rx="6" fill="#744a30"/>
+  <circle cx="68" cy="56" r="33" fill="#1b1411"/>
+  <ellipse cx="70" cy="64" rx="21" ry="24" fill="#8a5a3c"/>
+  <g class="eyes" fill="#1b1411"><circle cx="66" cy="63" r="2.600"/><circle cx="82" cy="63" r="2.600"/></g>
+  <path d="M66 76q8 6 16 0" stroke="#1b1411" stroke-width="2.200"/>
+  <rect x="126" y="48" width="52" height="92" rx="9" fill="#102756"/>
+  <rect x="131" y="56" width="42" height="74" rx="3" fill="#f1f5fd"/>
+  <g class="ok">
+    <circle cx="152" cy="90" r="15" fill="#285d3b"/>
+    <path d="M145 90l5 6 10-11" stroke="#fff" stroke-width="3.500"/>
+  </g>
+  <path d="M104 134l24-4" stroke="#173ad3" stroke-width="16"/>
+  <circle cx="132" cy="128" r="9" fill="#8a5a3c"/>
+</g>
+</svg>

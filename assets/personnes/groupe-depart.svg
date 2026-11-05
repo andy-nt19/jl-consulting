@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 252" role="img" aria-label="Trois étudiants prêts à partir">
+<style>
+.eyes{transform-box:fill-box;transform-origin:center;animation:blink 5s infinite}
+.e2{animation-delay:1.7s}.e3{animation-delay:3.1s}
+.wave{transform-origin:90px 100px;animation:wave 2.6s ease-in-out infinite}
+.lift{transform-origin:262px 100px;animation:lift 3.4s ease-in-out infinite}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+@keyframes wave{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(11deg)}}
+@keyframes lift{0%,100%{transform:rotate(0)}50%{transform:rotate(-7deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Étudiante au sac à dos -->
+  <rect x="82" y="96" width="58" height="62" rx="16" fill="#173ad3"/>
+  <path d="M100 166V238M124 166V238" stroke="#102756" stroke-width="19"/>
+  <path d="M90 243h18M118 243h18" stroke="#fff" stroke-width="11"/>
+  <path d="M90 243h18M118 243h18" stroke="#173ad3" stroke-width="7"/>
+  <path d="M90 100q2-10 22-10t22 10l-1 70H91z" fill="#f6cd39"/>
+  <path d="M97 92v30M127 92v30" stroke="#173ad3" stroke-width="6"/>
+  <path d="M134 102l7 48" stroke="#f6cd39" stroke-width="14"/>
+  <circle cx="142" cy="156" r="8" fill="#7a4a30"/>
+  <g class="wave">
+    <path d="M90 102L66 56" stroke="#f6cd39" stroke-width="14"/>
+    <circle cx="62" cy="47" r="8.5" fill="#7a4a30"/>
+  </g>
+  <rect x="104" y="72" width="16" height="22" rx="6" fill="#6b3f2a"/>
+  <circle cx="112" cy="46" r="33" fill="#1b1411"/>
+  <ellipse cx="112" cy="55" rx="20" ry="23" fill="#7a4a30"/>
+  <g class="eyes" fill="#1b1411"><circle cx="104.500" cy="53" r="2.500"/><circle cx="119.500" cy="53" r="2.500"/></g>
+  <path d="M105 65q7 6 14 0" stroke="#1b1411" stroke-width="2.200"/>
+
+  <!-- Étudiant diplômé -->
+  <path d="M228 166V238M252 166V238" stroke="#132642" stroke-width="20"/>
+  <path d="M216 243h20M246 243h20" stroke="#132642" stroke-width="11"/>
+  <path d="M216 100q2-10 24-10t24 10l-1 72h-46z" fill="#173ad3"/>
+  <path d="M232 90l8 13 8-13z" fill="#fff"/>
+  <path d="M218 102l-8 48" stroke="#173ad3" stroke-width="15"/>
+  <circle cx="209" cy="157" r="8.500" fill="#5a3322"/>
+  <g class="lift">
+    <path d="M262 102l24-44" stroke="#173ad3" stroke-width="15"/>
+    <circle cx="290" cy="50" r="8.500" fill="#5a3322"/>
+    <path d="M282 38l18 26" stroke="#fff" stroke-width="9"/>
+    <path d="M287 45l8 11" stroke="#f6cd39" stroke-width="10"/>
+  </g>
+  <rect x="232" y="72" width="16" height="22" rx="6" fill="#4a2a1c"/>
+  <ellipse cx="240" cy="54" rx="21" ry="24" fill="#5a3322"/>
+  <path d="M219 48q1-16 21-16t21 16q-10-6-21-6t-21 6z" fill="#1b1411"/>
+  <path d="M206 30l34-14 34 14-34 14z" fill="#102756"/>
+  <path d="M272 30v18" stroke="#f6cd39" stroke-width="3"/>
+  <circle cx="272" cy="50" r="3.500" fill="#f6cd39"/>
+  <g class="eyes e2" fill="#1b1411"><circle cx="232.500" cy="55" r="2.500"/><circle cx="247.500" cy="55" r="2.500"/></g>
+  <path d="M232 66q8 7 16 0" stroke="#1b1411" stroke-width="2.200"/>
+
+  <!-- Étudiante à la valise -->
+  <path d="M362 192V238M384 192V238" stroke="#6b3f2a" stroke-width="14"/>
+  <path d="M352 243h17M377 243h17" stroke="#102756" stroke-width="10"/>
+  <path d="M352 100q2-10 21-10t21 10l13 96h-68z" fill="#4aa9e4"/>
+  <path d="M345 170h56" stroke="#fff" stroke-width="4"/>
+  <path d="M354 102l-9 44" stroke="#4aa9e4" stroke-width="13"/>
+  <circle cx="344" cy="152" r="7.500" fill="#8a5a3c"/>
+  <path d="M392 102l18 44" stroke="#4aa9e4" stroke-width="13"/>
+  <circle cx="413" cy="152" r="7.500" fill="#8a5a3c"/>
+  <path d="M415 156l14 22" stroke="#132642" stroke-width="4"/>
+  <rect x="417" y="176" width="42" height="62" rx="7" fill="#102756"/>
+  <path d="M428 186v42M448 186v42" stroke="#4aa9e4" stroke-width="3"/>
+  <circle cx="427" cy="244" r="5" fill="#132642"/><circle cx="449" cy="244" r="5" fill="#132642"/>
+  <rect x="365" y="72" width="15" height="22" rx="6" fill="#744a30"/>
+  <ellipse cx="373" cy="55" rx="19" ry="22" fill="#8a5a3c"/>
+  <path d="M352 50q-3-30 21-30t21 30q-10-9-21-9t-21 9z" fill="#f6cd39"/>
+  <path d="M388 24q12-12 16 0q-2 10-14 8z" fill="#173ad3"/>
+  <path d="M354 40q19-12 38 0" stroke="#173ad3" stroke-width="3"/>
+  <g class="eyes e3" fill="#1b1411"><circle cx="366" cy="55" r="2.500"/><circle cx="380" cy="55" r="2.500"/></g>
+  <path d="M366 65q7 6 14 0" stroke="#1b1411" stroke-width="2.200"/>
+</g>
+</svg>
